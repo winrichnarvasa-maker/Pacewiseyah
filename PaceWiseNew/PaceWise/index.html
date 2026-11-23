@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PaceWise</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- Icon library: each icon is drawn once here, then reused with <svg class="icon"><use href="#i-name"></use></svg> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="i-leaf" viewBox="0 0 24 24"><path d="M5 19c0-8 5-14 15-14 0 10-6 15-14 15"/><path d="M5 19c3-5 6-8 10-10"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 11l9-8 9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/></symbol>
+  <symbol id="i-list" viewBox="0 0 24 24"><path d="M9 6h12M9 12h12M9 18h12M4 6h.01M4 12h.01M4 18h.01"/></symbol>
+  <symbol id="i-timer" viewBox="0 0 24 24"><circle cx="12" cy="13" r="8"/><path d="M12 9v4l2 2M9 2h6"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 3l2.7 5.6 6.1.9-4.4 4.3 1 6.1L12 17l-5.4 2.9 1-6.1L3.2 9.5l6.1-.9z"/></symbol>
+  <symbol id="i-chart" viewBox="0 0 24 24"><path d="M5 20V10M12 20V4M19 20v-7"/></symbol>
+  <symbol id="i-smile" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 14c1 2 3 3 4 3s3-1 4-3M9 9.5h.01M15 9.5h.01"/></symbol>
+  <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></symbol>
+  <symbol id="i-plus" viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></symbol>
+  <symbol id="i-calendar" viewBox="0 0 24 24"><rect x="4" y="5" width="16" height="15" rx="3"/><path d="M4 10h16M8 3v4M16 3v4"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+  <symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="i-heart" viewBox="0 0 24 24"><path d="M12 20s-8-5-8-11a4.5 4.5 0 0 1 8-2.5A4.5 4.5 0 0 1 20 9c0 6-8 11-8 11z"/></symbol>
+  <symbol id="i-cup" viewBox="0 0 24 24"><path d="M5 9h11v5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10h2a2 2 0 0 1 0 4h-2M8 3v2M12 3v2"/></symbol>
+</svg>
+
+<div id="app">
+
+  <!-- Sidebar on desktop, top bar + bottom tab bar on phones -->
+  <aside class="side">
+    <header class="brand">
+      <div class="brandName"><svg class="icon logo"><use href="#i-leaf"></use></svg><b>PaceWise</b></div>
+      <small>Your pace. Your progress.</small>
+    </header>
+
+    <!-- Six pages. data-go holds the id of the page (section) that the button opens. -->
+    <nav id="tabs" class="tabbar" aria-label="Main">
+      <button type="button" data-go="today" class="on" aria-current="page"><svg class="icon"><use href="#i-home"></use></svg>Home</button>
+      <button type="button" data-go="tasks"><svg class="icon"><use href="#i-list"></use></svg>Tasks</button>
+      <button type="button" data-go="focus"><svg class="icon"><use href="#i-timer"></use></svg>Focus</button>
+      <button type="button" data-go="progress"><svg class="icon"><use href="#i-chart"></use></svg>Progress</button>
+      <button type="button" data-go="mood"><svg class="icon"><use href="#i-smile"></use></svg>Mood</button>
+      <button type="button" data-go="settings"><svg class="icon"><use href="#i-sliders"></use></svg>Settings</button>
+    </nav>
+
+    <div class="plantCard">
+      <svg viewBox="0 0 120 110" aria-hidden="true">
+        <path class="stem" d="M60 62V34"/>
+        <ellipse class="leafA" cx="44" cy="34" rx="16" ry="8" transform="rotate(-35 44 34)"/>
+        <ellipse class="leafA" cx="76" cy="28" rx="16" ry="8" transform="rotate(35 76 28)"/>
+        <ellipse class="leafB" cx="60" cy="18" rx="8" ry="15"/>
+        <path class="pot" d="M36 62h48l-6 40H42z"/>
+        <path class="potFace" d="M53 80h.01M67 80h.01M55 86c2 2 8 2 10 0"/>
+      </svg>
+      <p>Little by little, you're getting there.</p>
+    </div>
+  </aside>
+
+  <main>
+    <!-- PAGE 1: HOME. A short summary of today, with shortcuts to the other pages -->
+    <section id="today" class="screen on" aria-labelledby="hToday">
+      <header class="top">
+        <div>
+          <h1 id="hToday"><span id="greeting">Hello!</span> <svg class="icon leafIcon"><use href="#i-leaf"></use></svg></h1>
+          <p class="sub">You've got this. One step at a time.</p>
+        </div>
+        <div class="topRight">
+          <p class="datePill"><svg class="icon"><use href="#i-calendar"></use></svg><span id="todayDate"></span></p>
+          <button id="addTaskBtn" class="btn" type="button"><svg class="icon"><use href="#i-plus"></use></svg>Add Task</button>
+        </div>
+      </header>
+
+      <!-- Four numbers worked out from the saved data -->
+      <div id="statRow" class="statRow"></div>
+
+      <div class="twoCol">
+        <!-- Today's Plan: short summary (max 3 tasks). Steps are managed on the Tasks page -->
+        <section class="card" aria-labelledby="hPlan">
+          <div class="cardHead">
+            <div>
+              <h2 id="hPlan"><svg class="icon"><use href="#i-leaf"></use></svg>Today's Plan</h2>
+              <p class="sub">Your top 3 tasks for the day.</p>
+            </div>
+            <span id="planCount" class="pill"></span>
+          </div>
+          <div class="meterRow overview"><div class="meter"><i id="planBar"></i></div><span id="planPct"></span></div>
+          <ul id="todayList" class="planList"></ul>
+        </section>
+
+        <!-- Shortcuts to the other pages -->
+        <section class="card" aria-labelledby="hShort">
+          <h2 id="hShort"><svg class="icon"><use href="#i-star"></use></svg>Shortcuts</h2>
+          <div class="shortcuts">
+            <button id="shortcutTask" class="shortcut" type="button"><span class="sico"><svg class="icon"><use href="#i-plus"></use></svg></span><span><b>Plan a task</b><small>Pick up to 3 for today</small></span></button>
+            <button class="shortcut" type="button" data-go="focus"><span class="sico"><svg class="icon"><use href="#i-timer"></use></svg></span><span><b>Start focusing</b><small>Open the focus timer</small></span></button>
+            <button class="shortcut" type="button" data-go="mood"><span class="sico"><svg class="icon"><use href="#i-smile"></use></svg></span><span><b>Log my mood</b><small>How are you feeling?</small></span></button>
+            <button class="shortcut" type="button" data-go="progress"><span class="sico"><svg class="icon"><use href="#i-chart"></use></svg></span><span><b>See my progress</b><small>Weekly summary and wins</small></span></button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <!-- PAGE 2: TASKS. Add, search, filter, edit, delete, complete, steps -->
+    <section id="tasks" class="screen" aria-labelledby="hTasks">
+      <header class="top"><div><h1 id="hTasks">Tasks</h1><p class="sub">Write it down, then break it into small steps.</p></div></header>
+
+      <form id="taskForm" class="card" novalidate>
+        <div class="addrow">
+          <input id="taskName" type="text" placeholder="Add a task" maxlength="60" autocomplete="off" aria-label="Task name">
+          <button class="btn" type="submit" aria-label="Add task"><svg class="icon"><use href="#i-plus"></use></svg>Add</button>
+        </div>
+        <p id="nameHint" class="hint" aria-live="polite"></p>
+        <button id="moreBtn" class="textBtn" type="button" aria-expanded="false" aria-controls="moreFields">Add subject or due date</button>
+        <div id="moreFields" class="more" hidden>
+          <input id="taskSubject" type="text" placeholder="Subject (optional)" maxlength="30" aria-label="Subject">
+          <input id="taskDue" type="date" aria-label="Due date">
+        </div>
+      </form>
+
+      <div class="searchrow">
+        <input id="searchBox" type="search" placeholder="Search tasks" maxlength="60" autocomplete="off" aria-label="Search tasks">
+        <select id="subjectFilter" aria-label="Filter by subject"><option value="">All subjects</option></select>
+      </div>
+
+      <nav id="filters" class="filters" aria-label="Filter tasks">
+        <button type="button" data-f="all" class="on">All</button>
+        <button type="button" data-f="pending">Pending</button>
+        <button type="button" data-f="done">Done</button>
+        <button type="button" data-f="due">Due soon</button>
+      </nav>
+      <ul id="taskList" class="taskGrid"></ul>
+    </section>
+
+    <!-- PAGE 3: FOCUS. The timer and information about today's focus time -->
+    <section id="focus" class="screen" aria-labelledby="hFocus">
+      <header class="top"><div><h1 id="hFocus">Focus</h1><p class="sub">One round at a time. Then a real break.</p></div></header>
+      <div class="twoCol">
+        <section class="card focusCard" aria-labelledby="hTimer">
+          <div class="cardHead">
+            <div>
+              <h2 id="hTimer"><svg class="icon"><use href="#i-leaf"></use></svg>Focus Time</h2>
+              <p class="sub">Stay present, stay proud.</p>
+            </div>
+            <span id="roundPill" class="pill"></span>
+          </div>
+          <div class="ring">
+            <svg viewBox="0 0 200 200" aria-hidden="true">
+              <circle class="ringTrack" cx="100" cy="100" r="90"/>
+              <circle id="ringBar" class="ringBar" cx="100" cy="100" r="90"/>
+            </svg>
+            <div class="ringText">
+              <div id="clock" aria-live="off">25:00</div>
+              <p id="phase">Focus</p>
+            </div>
+          </div>
+          <div class="timerBtns">
+            <button id="startBtn" class="btn" type="button">Start</button>
+            <button id="skipBtn" class="btn soft" type="button">Skip</button>
+            <button id="resetBtn" class="btn peach" type="button">Reset</button>
+          </div>
+          <p id="nextUp" class="upcoming"></p>
+        </section>
+
+        <section class="card" aria-labelledby="hToday2">
+          <h2 id="hToday2"><svg class="icon"><use href="#i-timer"></use></svg>Today's focus</h2>
+          <div id="focusStats" class="stats"></div>
+          <p id="focusTip" class="moodMsg"></p>
+          <p class="hint">Skipping a round does not count it. Only finished rounds are saved.</p>
+
+          <!-- Task selection dropdown -->
+          <select id="taskSelector" class="taskSelector" aria-label="Select a task for this round">
+            <option value="">No task</option>
+          </select>
+
+          <button class="btn soft" type="button" data-go="settings">Change timer length</button>
+        </section>
+      </div>
+    </section>
+
+    <!-- PAGE 4: PROGRESS. Weekly summary, completed tasks and Small Wins -->
+    <section id="progress" class="screen" aria-labelledby="hProgress">
+      <header class="top"><div><h1 id="hProgress">Progress</h1><p class="sub">The last 7 days, from your real activity.</p></div></header>
+      <div class="progGrid">
+        <section class="card wide">
+          <h2><svg class="icon"><use href="#i-chart"></use></svg>This week</h2>
+          <div id="stats" class="stats"></div>
+          <p id="bestDay" class="hint"></p>
+          <div id="bars" class="bars" role="img" aria-label="Focus minutes for the last 7 days"></div>
+        </section>
+
+        <section class="card" aria-labelledby="hDone">
+          <div class="cardHead">
+            <h2 id="hDone"><svg class="icon"><use href="#i-check"></use></svg>Completed tasks</h2>
+            <span id="doneCount" class="pill"></span>
+          </div>
+          <ul id="doneList" class="doneList"></ul>
+        </section>
+
+        <section id="winsCard" class="card" aria-labelledby="hWins">
+          <div class="cardHead">
+            <div>
+              <h2 id="hWins"><svg class="icon"><use href="#i-star"></use></svg>Small Wins</h2>
+              <p id="winsSub" class="sub">Celebrate every step forward.</p>
+            </div>
+            <button id="winsAllBtn" class="textBtn" type="button" hidden>View all</button>
+          </div>
+          <ul id="winsList" class="winGrid"></ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- PAGE 5: MOOD. Pick today's mood, add a note, see earlier entries -->
+    <section id="mood" class="screen" aria-labelledby="hMood">
+      <header class="top"><div><h1 id="hMood">Mood</h1><p class="sub">A quick check-in with yourself.</p></div></header>
+      <div class="twoCol">
+        <section class="card" aria-labelledby="hFeel">
+          <h2 id="hFeel">How are you feeling?</h2>
+          <div id="moods" class="moods">
+            <button type="button" data-m=":D"><span class="face">😄</span>Amazing</button>
+            <button type="button" data-m=":)"><span class="face">🙂</span>Good</button>
+            <button type="button" data-m=":|"><span class="face">😐</span>Okay</button>
+            <button type="button" data-m=":("><span class="face">😴</span>Tired</button>
+            <button type="button" data-m=":'("><span class="face">😣</span>Overwhelmed</button>
+          </div>
+          <p id="moodHint" class="moodMsg" aria-live="polite"></p>
+          <form id="moodForm" class="addrow" novalidate>
+            <input id="moodNote" type="text" maxlength="80" placeholder="Short note (optional)" autocomplete="off" aria-label="Mood note">
+            <button class="btn soft" type="submit">Save note</button>
+          </form>
+        </section>
+
+        <section class="card" aria-labelledby="hHistory">
+          <h2 id="hHistory">Your mood this week</h2>
+          <div id="moodWeek" class="moodweek"></div>
+          <h2 class="subhead">Mood history</h2>
+          <ul id="moodHistory" class="history"></ul>
+        </section>
+      </div>
+    </section>
+
+    <!-- PAGE 6: SETTINGS. Name, timer length, backup, restore, clear -->
+    <section id="settings" class="screen" aria-labelledby="hSettings">
+      <header class="top"><div><h1 id="hSettings">Settings</h1><p class="sub">Make PaceWise fit your pace.</p></div></header>
+      <div class="setGrid">
+        <section class="card">
+          <h2>You and your timer</h2>
+          <form id="setForm" novalidate>
+            <label class="row">Your name (optional)<input id="userName" type="text" maxlength="20" autocomplete="off" class="wide"></label>
+            <label class="row">Work minutes<input id="workMin" type="number" min="1" max="90" inputmode="numeric"></label>
+            <label class="row">Break minutes<input id="brkMin" type="number" min="1" max="30" inputmode="numeric"></label>
+            <p id="setHint" class="hint" aria-live="polite"></p>
+            <button id="saveSet" class="btn" type="submit">Save</button>
+          </form>
+        </section>
+        <section class="card">
+          <h2>Your data</h2>
+          <div class="row"><span>Backup file</span><button id="backupBtn" class="btn soft" type="button">Save</button></div>
+          <div class="row"><span>Restore from file</span><button id="chooseBtn" class="btn soft" type="button">Choose</button><input id="restoreFile" type="file" accept=".json,application/json" hidden></div>
+          <div class="row"><span>Clear all data</span><button id="clearBtn" class="btn peach" type="button">Clear</button></div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <p id="msg" role="status" aria-live="polite"></p>
+</div>
+<!-- Load order matters: helpers and storage first, app.js last (it starts the app) -->
+<script src="js/helpers.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/tasks.js"></script>
+<script src="js/progress.js"></script>
+<script src="js/timer.js"></script>
+<script src="js/mood.js"></script>
+<script src="js/settings.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

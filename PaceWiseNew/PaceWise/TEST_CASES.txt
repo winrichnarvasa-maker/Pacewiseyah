@@ -1,0 +1,26 @@
+PaceWise - Test Cases (run these yourselves and write YOUR actual result)
+An automated browser run on this version passed 80/80 checks. Still re-test by hand before the defense.
+
+No | Action                                           | Expected result
+1  | Click each of the 6 sidebar buttons              | Each opens its own page (Home, Tasks, Focus, Progress, Mood, Settings); the clicked button is highlighted
+2  | Tasks: press Add with an empty box               | Message: "Please type a task name."
+3  | Type "ab" and add                                | Message: needs at least 3 characters
+4  | Add "Math set" twice                             | Second one is rejected: already on your list
+5  | Add a task with a past due date                  | Message: due date already past
+6  | Add to Today on 4 tasks                          | 4th is blocked with a kind message (limit 3)
+7  | Add 2 steps, tick one                            | Bar shows 1/2; a "Finished step" win appears on the Progress page
+8  | Tick every step                                  | Task becomes done and shows in Completed tasks (Progress)
+9  | Edit a task name / a step; delete a task         | Changes are saved and shown on every page
+10 | Home: tick a task's checkbox                     | Tiles, "x / y tasks" and the % bar update; Tasks page shows the same task as done
+11 | Home shortcuts and Add Task button               | Each opens the correct page
+12 | Settings: work minutes = 0                       | Error message, nothing saved
+13 | Focus: Start, Pause, Resume                      | Counts down, holds time when paused, circle shrinks; keeps running if you visit another page
+14 | Let a focus round finish                         | Round saved, win added, break starts, Focus numbers update
+15 | Press Skip during focus                          | Goes to break, NO round is counted
+16 | Press Reset                                      | Back to full focus time
+17 | Mood: pick a face and save a note                | Saved; face highlighted; appears in Mood history; Home tile updates
+18 | Refresh the page                                 | Tasks, wins, mood, settings are still there
+19 | Settings: Backup > Clear > Restore               | All data returns on every page
+20 | Restore a file that is not a backup              | Message: not a valid backup, data unchanged
+21 | Type <b>html</b> as a task name                  | Shown as plain text, not run
+22 | Open every page at 360px wide                    | No sideways scrolling; all 6 tabs visible at the bottom
